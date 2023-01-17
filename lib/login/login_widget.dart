@@ -1,7 +1,11 @@
+import '../auth/auth_util.dart';
+import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginWidget extends StatefulWidget {
@@ -11,8 +15,47 @@ class LoginWidget extends StatefulWidget {
   _LoginWidgetState createState() => _LoginWidgetState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
-  TextEditingController? emailAddressController;
+class _LoginWidgetState extends State<LoginWidget>
+    with TickerProviderStateMixin {
+  final animationsMap = {
+    'textFieldOnPageLoadAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeIn,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(-100, 0),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+    'textFieldOnPageLoadAnimation2': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeIn,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(100, 0),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+    'circleImageOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        RotateEffect(
+          curve: Curves.easeIn,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+      ],
+    ),
+  };
+  TextEditingController? email1Controller;
   TextEditingController? passwordController;
   late bool passwordVisibility;
   final _unfocusNode = FocusNode();
@@ -21,7 +64,8 @@ class _LoginWidgetState extends State<LoginWidget> {
   @override
   void initState() {
     super.initState();
-    emailAddressController = TextEditingController();
+
+    email1Controller = TextEditingController();
     passwordController = TextEditingController();
     passwordVisibility = false;
   }
@@ -29,7 +73,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   @override
   void dispose() {
     _unfocusNode.dispose();
-    emailAddressController?.dispose();
+    email1Controller?.dispose();
     passwordController?.dispose();
     super.dispose();
   }
@@ -49,12 +93,26 @@ class _LoginWidgetState extends State<LoginWidget> {
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                   child: TextFormField(
-                    controller: emailAddressController,
+                    controller: email1Controller,
+                    onFieldSubmitted: (_) async {
+                      GoRouter.of(context).prepareAuthEvent();
+
+                      final user = await signInWithEmail(
+                        context,
+                        email1Controller!.text,
+                        passwordController!.text,
+                      );
+                      if (user == null) {
+                        return;
+                      }
+
+                      context.goNamedAuth('Allset', mounted);
+                    },
                     obscureText: false,
                     decoration: InputDecoration(
-                      labelText: 'First Name',
+                      labelText: 'email',
                       labelStyle: FlutterFlowTheme.of(context).bodyText2,
-                      hintText: 'Enter First Name:',
+                      hintText: 'Enter  email:',
                       hintStyle: FlutterFlowTheme.of(context).bodyText2,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
@@ -91,13 +149,28 @@ class _LoginWidgetState extends State<LoginWidget> {
                           EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
                     ),
                     style: FlutterFlowTheme.of(context).bodyText1,
-                  ),
+                  ).animateOnPageLoad(
+                      animationsMap['textFieldOnPageLoadAnimation1']!),
                 ),
               ),
               Align(
                 alignment: AlignmentDirectional(0, 0.29),
                 child: TextFormField(
                   controller: passwordController,
+                  onFieldSubmitted: (_) async {
+                    GoRouter.of(context).prepareAuthEvent();
+
+                    final user = await signInWithEmail(
+                      context,
+                      email1Controller!.text,
+                      passwordController!.text,
+                    );
+                    if (user == null) {
+                      return;
+                    }
+
+                    context.goNamedAuth('Allset', mounted);
+                  },
                   obscureText: !passwordVisibility,
                   decoration: InputDecoration(
                     labelText: 'Password',
@@ -151,7 +224,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                     ),
                   ),
                   style: FlutterFlowTheme.of(context).bodyText1,
-                ),
+                ).animateOnPageLoad(
+                    animationsMap['textFieldOnPageLoadAnimation2']!),
               ),
               Align(
                 alignment: AlignmentDirectional(0.01, -0.84),
@@ -166,13 +240,25 @@ class _LoginWidgetState extends State<LoginWidget> {
                     'assets/images/DAGWOOD.jpeg',
                     fit: BoxFit.cover,
                   ),
-                ),
+                ).animateOnPageLoad(
+                    animationsMap['circleImageOnPageLoadAnimation']!),
               ),
               Align(
                 alignment: AlignmentDirectional(-0.04, 0.66),
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
+                  onPressed: () async {
+                    GoRouter.of(context).prepareAuthEvent();
+
+                    final user = await signInWithEmail(
+                      context,
+                      email1Controller!.text,
+                      passwordController!.text,
+                    );
+                    if (user == null) {
+                      return;
+                    }
+
+                    context.goNamedAuth('Allset', mounted);
                   },
                   text: 'Sign In',
                   options: FFButtonOptions(
@@ -206,14 +292,20 @@ class _LoginWidgetState extends State<LoginWidget> {
               ),
               Align(
                 alignment: AlignmentDirectional(0.55, 0.83),
-                child: Text(
-                  'Sign Up',
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Poppins',
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                        fontSize: 16,
-                        decoration: TextDecoration.underline,
-                      ),
+                child: InkWell(
+                  onTap: () async {
+                    context.pushNamed('signup');
+                  },
+                  child: Text(
+                    'Sign Up',
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Poppins',
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          fontSize: 16,
+                          decoration: TextDecoration.underline,
+                        ),
+                  ),
                 ),
               ),
             ],

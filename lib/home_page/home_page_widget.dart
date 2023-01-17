@@ -1,7 +1,10 @@
+import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePageWidget extends StatefulWidget {
@@ -11,9 +14,42 @@ class HomePageWidget extends StatefulWidget {
   _HomePageWidgetState createState() => _HomePageWidgetState();
 }
 
-class _HomePageWidgetState extends State<HomePageWidget> {
+class _HomePageWidgetState extends State<HomePageWidget>
+    with TickerProviderStateMixin {
+  final animationsMap = {
+    'buttonOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        ShakeEffect(
+          curve: Curves.easeInOut,
+          delay: 230.ms,
+          duration: 1990.ms,
+          hz: 12,
+          offset: Offset(0, 0),
+          rotation: -0.244,
+        ),
+      ],
+    ),
+    'circleImageOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        ScaleEffect(
+          curve: Curves.easeIn,
+          delay: 240.ms,
+          duration: 600.ms,
+          begin: -1,
+          end: 1,
+        ),
+      ],
+    ),
+  };
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -34,8 +70,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               Align(
                 alignment: AlignmentDirectional(0, 0.76),
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
+                  onPressed: () async {
+                    context.pushNamed('login');
                   },
                   text: 'Sign In',
                   options: FFButtonOptions(
@@ -54,13 +90,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     ),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                ),
+                ).animateOnPageLoad(
+                    animationsMap['buttonOnPageLoadAnimation']!),
               ),
               Align(
                 alignment: AlignmentDirectional(-0.07, 0.5),
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
+                  onPressed: () async {
+                    context.pushNamed('signup');
                   },
                   text: 'Continue',
                   options: FFButtonOptions(
@@ -94,7 +131,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     'assets/images/wings.jpeg',
                     fit: BoxFit.cover,
                   ),
-                ),
+                ).animateOnPageLoad(
+                    animationsMap['circleImageOnPageLoadAnimation']!),
               ),
               Align(
                 alignment: AlignmentDirectional(0.04, -0.08),

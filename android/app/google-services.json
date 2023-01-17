@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "435003661540",
+    "project_id": "molly-36434",
+    "storage_bucket": "molly-36434.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435003661540:android:20792b82d25e3746de20f1",
+        "android_client_info": {
+          "package_name": "com.mycompany.molly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "435003661540-aidi6v52lsa2j08gehrj8qpfgh2n1p2q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.molly",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "435003661540-0hi55cij8d3ambketqcv3mm3ap06av67.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIHS0yJ7j85xvO6Wv2pPyUx_s0PXVCx8Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "435003661540-0hi55cij8d3ambketqcv3mm3ap06av67.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "435003661540-k86vk9egq45o6v4g9m3bg54sp1c8vck6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.molly"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

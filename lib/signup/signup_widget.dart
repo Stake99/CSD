@@ -1,7 +1,11 @@
+import '../auth/auth_util.dart';
+import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignupWidget extends StatefulWidget {
@@ -11,27 +15,78 @@ class SignupWidget extends StatefulWidget {
   _SignupWidgetState createState() => _SignupWidgetState();
 }
 
-class _SignupWidgetState extends State<SignupWidget> {
-  TextEditingController? emailAddressController1;
-  TextEditingController? emailAddressController2;
-  TextEditingController? emailAddressController3;
+class _SignupWidgetState extends State<SignupWidget>
+    with TickerProviderStateMixin {
+  final animationsMap = {
+    'textFieldOnPageLoadAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeIn,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(-100, 0),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+    'textFieldOnPageLoadAnimation2': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeIn,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(100, 0),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+    'textFieldOnPageLoadAnimation3': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        MoveEffect(
+          curve: Curves.easeIn,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(100, 0),
+          end: Offset(0, 0),
+        ),
+        MoveEffect(
+          curve: Curves.easeIn,
+          delay: 600.ms,
+          duration: 600.ms,
+          begin: Offset(-100, 0),
+          end: Offset(0, 0),
+        ),
+      ],
+    ),
+  };
+  TextEditingController? confirmPassword2Controller;
+  late bool confirmPassword2Visibility;
+  TextEditingController? email1Controller;
+  TextEditingController? password2Controller;
+  late bool password2Visibility;
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    emailAddressController1 = TextEditingController();
-    emailAddressController2 = TextEditingController();
-    emailAddressController3 = TextEditingController();
+
+    confirmPassword2Controller = TextEditingController();
+    confirmPassword2Visibility = false;
+    email1Controller = TextEditingController();
+    password2Controller = TextEditingController();
+    password2Visibility = false;
   }
 
   @override
   void dispose() {
     _unfocusNode.dispose();
-    emailAddressController1?.dispose();
-    emailAddressController2?.dispose();
-    emailAddressController3?.dispose();
+    confirmPassword2Controller?.dispose();
+    email1Controller?.dispose();
+    password2Controller?.dispose();
     super.dispose();
   }
 
@@ -61,162 +116,34 @@ class _SignupWidgetState extends State<SignupWidget> {
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0, 0.39),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                  child: TextFormField(
-                    controller: emailAddressController1,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: FlutterFlowTheme.of(context).bodyText2,
-                      hintText: 'Password:',
-                      hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      filled: true,
-                      fillColor:
-                          FlutterFlowTheme.of(context).secondaryBackground,
-                      contentPadding:
-                          EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0, -0.1),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                  child: TextFormField(
-                    controller: emailAddressController2,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'First Name',
-                      labelStyle: FlutterFlowTheme.of(context).bodyText2,
-                      hintText: 'Enter First Name:',
-                      hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      filled: true,
-                      fillColor:
-                          FlutterFlowTheme.of(context).secondaryBackground,
-                      contentPadding:
-                          EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0, 0.14),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                  child: TextFormField(
-                    controller: emailAddressController3,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelText: 'Email Or  Phone Number:',
-                      labelStyle: FlutterFlowTheme.of(context).bodyText2,
-                      hintText: 'Email Or Phone Number:',
-                      hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: FlutterFlowTheme.of(context).alternate,
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      filled: true,
-                      fillColor:
-                          FlutterFlowTheme.of(context).secondaryBackground,
-                      contentPadding:
-                          EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
-                    ),
-                    style: FlutterFlowTheme.of(context).bodyText1,
-                  ),
-                ),
-              ),
-              Align(
                 alignment: AlignmentDirectional(-0.01, 0.72),
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
+                  onPressed: () async {
+                    GoRouter.of(context).prepareAuthEvent();
+                    if (password2Controller?.text !=
+                        confirmPassword2Controller?.text) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Passwords don\'t match!',
+                          ),
+                        ),
+                      );
+                      return;
+                    }
+
+                    final user = await createAccountWithEmail(
+                      context,
+                      email1Controller!.text,
+                      password2Controller!.text,
+                    );
+                    if (user == null) {
+                      return;
+                    }
+
+                    context.pushNamedAuth('Allset', mounted);
                   },
-                  text: 'Sign In',
+                  text: 'Sign Up',
                   options: FFButtonOptions(
                     width: 235,
                     height: 65,
@@ -248,15 +175,246 @@ class _SignupWidgetState extends State<SignupWidget> {
               ),
               Align(
                 alignment: AlignmentDirectional(0.36, 0.86),
-                child: Text(
-                  'Sign In',
-                  style: FlutterFlowTheme.of(context).bodyText1.override(
-                        fontFamily: 'Poppins',
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                        fontSize: 15,
-                        decoration: TextDecoration.underline,
-                      ),
+                child: InkWell(
+                  onTap: () async {
+                    context.pushNamed('login');
+                  },
+                  child: Text(
+                    'Sign In',
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Poppins',
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          fontSize: 15,
+                          decoration: TextDecoration.underline,
+                        ),
+                  ),
                 ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(0, -0.05),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                  child: TextFormField(
+                    controller: email1Controller,
+                    onFieldSubmitted: (_) async {
+                      GoRouter.of(context).prepareAuthEvent();
+                      if (password2Controller?.text !=
+                          confirmPassword2Controller?.text) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Passwords don\'t match!',
+                            ),
+                          ),
+                        );
+                        return;
+                      }
+
+                      final user = await createAccountWithEmail(
+                        context,
+                        email1Controller!.text,
+                        password2Controller!.text,
+                      );
+                      if (user == null) {
+                        return;
+                      }
+
+                      context.goNamedAuth('Allset', mounted);
+                    },
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      labelText: 'email',
+                      labelStyle: FlutterFlowTheme.of(context).bodyText2,
+                      hintText: 'Enter  email:',
+                      hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).alternate,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                      filled: true,
+                      fillColor:
+                          FlutterFlowTheme.of(context).secondaryBackground,
+                      contentPadding:
+                          EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
+                    ),
+                    style: FlutterFlowTheme.of(context).bodyText1,
+                  ).animateOnPageLoad(
+                      animationsMap['textFieldOnPageLoadAnimation1']!),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(0, 0.18),
+                child: TextFormField(
+                  controller: password2Controller,
+                  onFieldSubmitted: (_) async {
+                    GoRouter.of(context).prepareAuthEvent();
+
+                    final user = await signInWithEmail(
+                      context,
+                      email1Controller!.text,
+                      password2Controller!.text,
+                    );
+                    if (user == null) {
+                      return;
+                    }
+
+                    context.goNamedAuth('Allset', mounted);
+                  },
+                  obscureText: !password2Visibility,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: FlutterFlowTheme.of(context).bodyText2,
+                    hintText: 'Password:',
+                    hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).alternate,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).alternate,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    filled: true,
+                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                    contentPadding:
+                        EdgeInsetsDirectional.fromSTEB(16, 24, 24, 24),
+                    suffixIcon: InkWell(
+                      onTap: () => setState(
+                        () => password2Visibility = !password2Visibility,
+                      ),
+                      focusNode: FocusNode(skipTraversal: true),
+                      child: Icon(
+                        password2Visibility
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
+                        color: FlutterFlowTheme.of(context).secondaryText,
+                        size: 22,
+                      ),
+                    ),
+                  ),
+                  style: FlutterFlowTheme.of(context).bodyText1,
+                ).animateOnPageLoad(
+                    animationsMap['textFieldOnPageLoadAnimation2']!),
+              ),
+              Align(
+                alignment: AlignmentDirectional(0, 0.37),
+                child: TextFormField(
+                  controller: confirmPassword2Controller,
+                  onFieldSubmitted: (_) async {
+                    GoRouter.of(context).prepareAuthEvent();
+
+                    final user = await signInWithEmail(
+                      context,
+                      email1Controller!.text,
+                      confirmPassword2Controller!.text,
+                    );
+                    if (user == null) {
+                      return;
+                    }
+
+                    context.goNamedAuth('Allset', mounted);
+                  },
+                  obscureText: !confirmPassword2Visibility,
+                  decoration: InputDecoration(
+                    labelText: 'ConfirmPassword',
+                    labelStyle: FlutterFlowTheme.of(context).bodyText2,
+                    hintText: 'Confirm Password:',
+                    hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).alternate,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).alternate,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    filled: true,
+                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                    contentPadding:
+                        EdgeInsetsDirectional.fromSTEB(16, 24, 24, 24),
+                    suffixIcon: InkWell(
+                      onTap: () => setState(
+                        () => confirmPassword2Visibility =
+                            !confirmPassword2Visibility,
+                      ),
+                      focusNode: FocusNode(skipTraversal: true),
+                      child: Icon(
+                        confirmPassword2Visibility
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
+                        color: FlutterFlowTheme.of(context).secondaryText,
+                        size: 22,
+                      ),
+                    ),
+                  ),
+                  style: FlutterFlowTheme.of(context).bodyText1,
+                ).animateOnPageLoad(
+                    animationsMap['textFieldOnPageLoadAnimation3']!),
               ),
             ],
           ),

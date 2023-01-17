@@ -1,6 +1,10 @@
+import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AllsetWidget extends StatefulWidget {
@@ -10,9 +14,30 @@ class AllsetWidget extends StatefulWidget {
   _AllsetWidgetState createState() => _AllsetWidgetState();
 }
 
-class _AllsetWidgetState extends State<AllsetWidget> {
+class _AllsetWidgetState extends State<AllsetWidget>
+    with TickerProviderStateMixin {
+  final animationsMap = {
+    'buttonOnPageLoadAnimation': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
+        ShakeEffect(
+          curve: Curves.easeIn,
+          delay: 0.ms,
+          duration: 1000.ms,
+          hz: 10,
+          offset: Offset(-19, 0),
+          rotation: 0.087,
+        ),
+      ],
+    ),
+  };
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -77,6 +102,31 @@ class _AllsetWidgetState extends State<AllsetWidget> {
                         fontSize: 15,
                       ),
                 ),
+              ),
+              Align(
+                alignment: AlignmentDirectional(-0.02, 0.79),
+                child: FFButtonWidget(
+                  onPressed: () async {
+                    context.pushNamed('HomeP');
+                  },
+                  text: 'Continue\n',
+                  options: FFButtonOptions(
+                    width: 235,
+                    height: 40,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                          fontFamily: 'Poppins',
+                          color: Colors.white,
+                          fontSize: 22,
+                        ),
+                    borderSide: BorderSide(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      width: 3,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ).animateOnPageLoad(
+                    animationsMap['buttonOnPageLoadAnimation']!),
               ),
             ],
           ),
